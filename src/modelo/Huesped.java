@@ -23,9 +23,11 @@ public class Huesped {
 
     }
 
-    public Huesped(String nombre, String apellido) {
+    public Huesped(String nombre, String apellido, String usuario, String contrasena) {
         this.nombre = nombre;
         this.apellido = apellido;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
     }
 
     public Integer getId() {
