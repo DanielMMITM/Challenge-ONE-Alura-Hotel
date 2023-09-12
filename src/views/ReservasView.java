@@ -14,6 +14,7 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.text.DateFormat;
 import java.text.Format;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -21,6 +22,9 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.text.SimpleDateFormat;
+import java.time.YearMonth;
+import java.util.Date;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -37,6 +41,8 @@ public class ReservasView extends JFrame {
 	int xMouse, yMouse;
 	private JLabel labelExit;
 	private JLabel labelAtras;
+
+	private Integer valor, totalDias;
 
 	/**
 	 * Launch the application.
@@ -71,9 +77,9 @@ public class ReservasView extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setUndecorated(true);
-		
 
-		
+
+
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
 		panel.setBackground(Color.WHITE);
@@ -234,12 +240,19 @@ public class ReservasView extends JFrame {
 		btnAtras.add(labelAtras);
 		labelAtras.setHorizontalAlignment(SwingConstants.CENTER);
 		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
-		
-		JLabel lblSiguiente = new JLabel("SIGUIENTE");
-		lblSiguiente.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSiguiente.setForeground(Color.WHITE);
-		lblSiguiente.setFont(new Font("Roboto", Font.PLAIN, 18));
-		lblSiguiente.setBounds(0, 0, 122, 35);
+
+
+		txtValor = new JTextField();
+		txtValor.setBackground(SystemColor.text);
+		txtValor.setHorizontalAlignment(SwingConstants.CENTER);
+		txtValor.setForeground(Color.BLACK);
+		txtValor.setBounds(78, 328, 43, 33);
+		txtValor.setEditable(false);
+		txtValor.setFont(new Font("Roboto Black", Font.BOLD, 17));
+		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		panel.add(txtValor);
+		txtValor.setColumns(20);
+
 		
 		
 		//Campos que guardaremos en la base de datos
@@ -262,27 +275,67 @@ public class ReservasView extends JFrame {
 		txtFechaSalida.getCalendarButton().setBounds(267, 1, 21, 31);
 		txtFechaSalida.setBackground(Color.WHITE);
 		txtFechaSalida.setFont(new Font("Roboto", Font.PLAIN, 18));
+		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
 		txtFechaSalida.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				//Activa el evento, después del usuario seleccionar las fechas se debe calcular el valor de la reserva
+				try{
+					valor = 850;
+					totalDias = 0;
+					DateFormat dfDay = new SimpleDateFormat("dd");
+					DateFormat dfMonth = new SimpleDateFormat("MM");
+					DateFormat dfYear = new SimpleDateFormat("yyyy");
+					Integer day = Integer.valueOf(dfDay.format(txtFechaEntrada.getDate()));
+					Integer month = Integer.valueOf(dfMonth.format(txtFechaEntrada.getDate()));
+					Integer year = Integer.valueOf(dfYear.format(txtFechaEntrada.getDate()));
+
+					Integer dayLeave = Integer.valueOf(dfDay.format(txtFechaSalida.getDate()));
+					Integer monthLeave = Integer.valueOf(dfMonth.format(txtFechaSalida.getDate()));
+					Integer yearLeave = Integer.valueOf(dfYear.format(txtFechaSalida.getDate()));
+
+					if (year <= yearLeave){
+						if(month == monthLeave){
+							if(day < dayLeave){
+								totalDias = dayLeave - day;
+								valor = valor * totalDias;
+								txtValor.setText(valor.toString());
+							}
+							else{
+								txtValor.setText(null);
+							}
+						}
+						else if(month < monthLeave){
+							for(int x = month; x < monthLeave; x++){
+								YearMonth yearMonthObject = YearMonth.of(year, month);
+								int daysInMonth = yearMonthObject.lengthOfMonth();
+								if(day == 0){
+									totalDias = totalDias + daysInMonth;
+								}
+								else{
+									totalDias = daysInMonth - day;
+									day = 0;
+								}
+							}
+							totalDias = totalDias + dayLeave;
+							valor = valor * totalDias;
+							txtValor.setText(valor.toString());
+						}
+						else{
+							txtValor.setText(null);
+						}
+					}
+					else{
+						txtValor.setText(null);
+					}
+				}
+				catch (Exception ex){
+					System.out.println(ex);
+				}
+
 			}
 		});
-		txtFechaSalida.setDateFormatString("yyyy-MM-dd");
 		txtFechaSalida.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaSalida.setBorder(new LineBorder(new Color(255, 255, 255), 0));
 		panel.add(txtFechaSalida);
-
-		txtValor = new JTextField();
-		txtValor.setBackground(SystemColor.text);
-		txtValor.setHorizontalAlignment(SwingConstants.CENTER);
-		txtValor.setForeground(Color.BLACK);
-		txtValor.setBounds(78, 328, 43, 33);
-		txtValor.setEditable(false);
-		txtValor.setFont(new Font("Roboto Black", Font.BOLD, 17));
-		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		panel.add(txtValor);
-		txtValor.setColumns(10);
-
 
 		txtFormaPago = new JComboBox();
 		txtFormaPago.setBounds(68, 417, 289, 38);
@@ -296,7 +349,7 @@ public class ReservasView extends JFrame {
 		btnsiguiente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {		
+				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {
 					RegistroHuesped registro = new RegistroHuesped();
 					registro.setVisible(true);
 				} else {
@@ -310,7 +363,12 @@ public class ReservasView extends JFrame {
 		panel.add(btnsiguiente);
 		btnsiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-
+		JLabel lblSiguiente = new JLabel("SIGUIENTE");
+		lblSiguiente.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSiguiente.setForeground(Color.WHITE);
+		lblSiguiente.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblSiguiente.setBounds(0, 0, 122, 35);
+		btnsiguiente.add(lblSiguiente);
 	}
 		
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"	
