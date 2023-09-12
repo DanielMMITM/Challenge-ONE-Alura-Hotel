@@ -1,5 +1,7 @@
 package views;
 
+import controller.HuespedController;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -30,6 +32,8 @@ public class Login extends JFrame {
 	int xMouse, yMouse;
 	private JLabel labelExit;
 
+	private HuespedController huespedController;
+
 	/**
 	 * Launch the application.
 	 */
@@ -50,6 +54,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		this.huespedController = new HuespedController();
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -235,12 +240,9 @@ public class Login extends JFrame {
 	}
 	
 	private void Login() {
-		 String Usuario= "admin";
-	     String Contraseña="admin";
+		String contrase = new String (txtContrasena.getPassword());
 
-	        String contrase=new String (txtContrasena.getPassword());
-
-	        if(txtUsuario.getText().equals(Usuario) && contrase.equals(Contraseña)){
+	        if(huespedController.login(txtUsuario.getText(), contrase)){
 	            MenuUsuario menu = new MenuUsuario();
 	            menu.setVisible(true);
 	            dispose();	 
