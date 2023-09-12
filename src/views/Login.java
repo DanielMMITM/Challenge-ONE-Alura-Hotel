@@ -1,6 +1,7 @@
 package views;
 
 import controller.HuespedController;
+import controller.PersonalController;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -32,7 +33,7 @@ public class Login extends JFrame {
 	int xMouse, yMouse;
 	private JLabel labelExit;
 
-	private HuespedController huespedController;
+	private PersonalController personalController;
 
 	/**
 	 * Launch the application.
@@ -54,7 +55,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		this.huespedController = new HuespedController();
+		this.personalController = new PersonalController();
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -242,7 +243,7 @@ public class Login extends JFrame {
 	private void Login() {
 		String contrase = new String (txtContrasena.getPassword());
 
-	        if(huespedController.login(txtUsuario.getText(), contrase)){
+	        if(personalController.login(txtUsuario.getText(), contrase)){
 	            MenuUsuario menu = new MenuUsuario();
 	            menu.setVisible(true);
 	            dispose();	 

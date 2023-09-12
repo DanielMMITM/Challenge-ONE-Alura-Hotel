@@ -12,26 +12,7 @@ public class HuespedDAO {
         this.con = con;
     }
 
-    public boolean getCredentials(String usuario, String password){
-        try{
-            final PreparedStatement statement = con.prepareStatement("SELECT usuario, contrasena FROM huespedes WHERE usuario = ? AND contrasena = ?");
+    public void guardarHuesped(){
 
-            try(statement) {
-                statement.setString(1, usuario);
-                statement.setString(2, password);
-
-                ResultSet rs = statement.executeQuery();
-
-                if (rs.next()){
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            }
-        }
-        catch (SQLException e){
-            throw new RuntimeException(e);
-        }
     }
 }

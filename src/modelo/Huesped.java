@@ -9,10 +9,6 @@ public class Huesped {
 
     private String apellido;
 
-    private String usuario;
-
-    private String contrasena;
-
     private LocalDate fecha_de_nacimiento;
 
     private String nacionalidad;
@@ -23,11 +19,9 @@ public class Huesped {
 
     }
 
-    public Huesped(String nombre, String apellido, String usuario, String contrasena) {
+    public Huesped(String nombre, String apellido) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.usuario = usuario;
-        this.contrasena = contrasena;
     }
 
     public Integer getId() {
@@ -52,22 +46,6 @@ public class Huesped {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
     }
 
     public LocalDate getFecha_de_nacimiento() {

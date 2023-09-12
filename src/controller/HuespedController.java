@@ -10,8 +10,8 @@ public class HuespedController {
         this.huespedDAO = huespedDAO = new HuespedDAO(new ConnectionFactory().recuperaConexion());
     }
 
-    public boolean login(String usuario, String password){
-        return huespedDAO.getCredentials(usuario, password);
+    public void guardar(){
+        huespedDAO.guardarHuesped();
     }
 
 

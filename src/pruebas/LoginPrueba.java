@@ -1,15 +1,17 @@
 package pruebas;
 
 import controller.HuespedController;
+import controller.PersonalController;
 import modelo.Huesped;
+import modelo.Personal;
 
 public class LoginPrueba {
     public static void main(String[] args) {
-        Huesped edgar = new Huesped("edgar", "martinez","dan", "123");
+        Personal edgar = new Personal("dan", "123");
 
-        HuespedController huespedController = new HuespedController();
+        PersonalController personalController = new PersonalController();
 
-        var response = huespedController.login(edgar.getUsuario(), "123");
+        var response = personalController.login(edgar.getUsuario(), "123");
 
         System.out.println("Respuesta: " + response);
 
