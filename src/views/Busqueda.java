@@ -320,8 +320,8 @@ public class Busqueda extends JFrame {
 			Optional.ofNullable(modelo.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()))
 					.ifPresentOrElse(fila -> {
 						Integer id = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
-						Date fecha_entrada = (Date) modelo.getValueAt(tabla.getSelectedRow(), 1);
-						Date fecha_salida = (Date) modelo.getValueAt(tabla.getSelectedRow(), 2);
+						Date fecha_entrada = Date.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 1).toString());
+						Date fecha_salida = Date.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 2).toString());
 						Integer valor = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 3).toString());
 						String forma_de_pago = (String) modelo.getValueAt(tabla.getSelectedRow(), 4);
 
@@ -344,7 +344,7 @@ public class Busqueda extends JFrame {
 						Integer id = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
 						String nombre = (String) modelo.getValueAt(tabla.getSelectedRow(), 1);
 						String apellido = (String) modelo.getValueAt(tabla.getSelectedRow(), 2);
-						Date fecha_de_nacimiento = (Date) modelo.getValueAt(tabla.getSelectedRow(), 3);
+						Date fecha_de_nacimiento = Date.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 3).toString());
 						String nacionalidad = (String) modelo.getValueAt(tabla.getSelectedRow(), 4);
 						String telefono = (String) modelo.getValueAt(tabla.getSelectedRow(), 5);
 						Integer id_reserva = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 6).toString());
