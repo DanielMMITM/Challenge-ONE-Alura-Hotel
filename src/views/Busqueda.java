@@ -339,15 +339,15 @@ public class Busqueda extends JFrame {
 			JOptionPane.showMessageDialog(null,"Por favor, elije un item");
 		}
 		else{
-			Optional.ofNullable(modelo.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()))
+			Optional.ofNullable(modeloHuesped.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()))
 					.ifPresentOrElse(fila -> {
-						Integer id = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
-						String nombre = (String) modelo.getValueAt(tabla.getSelectedRow(), 1);
-						String apellido = (String) modelo.getValueAt(tabla.getSelectedRow(), 2);
-						Date fecha_de_nacimiento = Date.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 3).toString());
-						String nacionalidad = (String) modelo.getValueAt(tabla.getSelectedRow(), 4);
-						String telefono = (String) modelo.getValueAt(tabla.getSelectedRow(), 5);
-						Integer id_reserva = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 6).toString());
+						Integer id = Integer.valueOf(modeloHuesped.getValueAt(tabla.getSelectedRow(), 0).toString());
+						String nombre = (String) modeloHuesped.getValueAt(tabla.getSelectedRow(), 1);
+						String apellido = (String) modeloHuesped.getValueAt(tabla.getSelectedRow(), 2);
+						Date fecha_de_nacimiento = Date.valueOf(modeloHuesped.getValueAt(tabla.getSelectedRow(), 3).toString());
+						String nacionalidad = (String) modeloHuesped.getValueAt(tabla.getSelectedRow(), 4);
+						String telefono = (String) modeloHuesped.getValueAt(tabla.getSelectedRow(), 5);
+						Integer id_reserva = Integer.valueOf(modeloHuesped.getValueAt(tabla.getSelectedRow(), 6).toString());
 
 						int filasModificadas;
 
