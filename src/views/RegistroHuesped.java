@@ -7,6 +7,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
+import controller.HuespedController;
+import dao.HuespedDAO;
+import modelo.Huesped;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -37,7 +41,13 @@ public class RegistroHuesped extends JFrame {
 	private JComboBox<Format> txtNacionalidad;
 	private JLabel labelExit;
 	private JLabel labelAtras;
+
+	private HuespedController huespedController;
 	int xMouse, yMouse;
+
+	public RegistroHuesped() {
+
+	}
 
 	/**
 	 * Launch the application.
@@ -58,7 +68,7 @@ public class RegistroHuesped extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroHuesped() {
+	public RegistroHuesped(int numReserva) {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/lOGO-50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -253,6 +263,12 @@ public class RegistroHuesped extends JFrame {
 		btnguardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				Huesped persona = new Huesped(txtNombre.getText(), txtApellido.getText(), txtFechaN.getDate(),
+						txtNacionalidad.getSelectedItem().toString(), txtTelefono.getText(), Integer.valueOf(txtNreserva.getText()));
+				if(huespedController.guardar(persona)){
+					JOptionPane.showMessageDialog(null, "Se registro con exito el huesped");
+				}
+
 			}
 		});
 		btnguardar.setLayout(null);

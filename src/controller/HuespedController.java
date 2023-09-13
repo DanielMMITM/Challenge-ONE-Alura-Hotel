@@ -2,6 +2,7 @@ package controller;
 
 import dao.HuespedDAO;
 import factory.ConnectionFactory;
+import modelo.Huesped;
 
 public class HuespedController {
     private HuespedDAO huespedDAO;
@@ -10,8 +11,8 @@ public class HuespedController {
         this.huespedDAO = huespedDAO = new HuespedDAO(new ConnectionFactory().recuperaConexion());
     }
 
-    public void guardar(){
-        huespedDAO.guardarHuesped();
+    public boolean guardar(Huesped persona){
+        return huespedDAO.guardarHuesped(persona);
     }
 
 
