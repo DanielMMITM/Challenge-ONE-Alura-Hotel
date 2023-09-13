@@ -358,8 +358,14 @@ public class ReservasView extends JFrame {
 				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {
 					Reserva reservacion = new Reserva(txtFechaEntrada.getDate(), txtFechaSalida.getDate(), Integer.valueOf(txtValor.getText()), txtFormaPago.getSelectedItem().toString());
 					int numReserva = reservaController.reservar(reservacion);
-					RegistroHuesped registro = new RegistroHuesped(numReserva);
-					registro.setVisible(true);
+					if (numReserva > 0){
+						JOptionPane.showMessageDialog(null, "Se registro con exito la reserva");
+						RegistroHuesped registro = new RegistroHuesped(numReserva);
+						registro.setVisible(true);
+					}
+					else{
+						JOptionPane.showMessageDialog(null, "Ocurrio un error con el registro de la reserva");
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");
 				}
