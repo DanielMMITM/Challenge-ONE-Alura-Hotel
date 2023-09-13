@@ -14,11 +14,15 @@ public class Reserva {
 
     private String forma_de_pago;
 
-    private Integer id_huesped;
-
-
     public Reserva() {
 
+    }
+
+    public Reserva(LocalDateTime fecha_entrada, LocalDateTime fecha_salida, Integer valor, String forma_de_pago) {
+        this.fecha_entrada = fecha_entrada;
+        this.fecha_salida = fecha_salida;
+        this.valor = valor;
+        this.forma_de_pago = forma_de_pago;
     }
 
     public Integer getId() {
@@ -61,11 +65,4 @@ public class Reserva {
         this.forma_de_pago = forma_de_pago;
     }
 
-    public Integer getId_huesped() {
-        return id_huesped;
-    }
-
-    public void setId_huesped(Integer id_huesped) {
-        this.id_huesped = id_huesped;
-    }
 }

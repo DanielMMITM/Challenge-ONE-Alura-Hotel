@@ -15,6 +15,8 @@ public class Huesped {
 
     private String telefono;
 
+    private Integer id_reserva;
+
     public Huesped() {
 
     }
@@ -70,5 +72,13 @@ public class Huesped {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Integer getId_reserva() {
+        return id_reserva;
+    }
+
+    public void setId_reserva(Integer id_reserva) {
+        this.id_reserva = id_reserva;
     }
 }
