@@ -1,27 +1,20 @@
 package views;
 
+import controller.HuespedController;
+import controller.ReservaController;
+import modelo.Reserva;
+
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.SystemColor;
-import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.JTabbedPane;
 import java.awt.Toolkit;
-import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
-import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -37,6 +30,11 @@ public class Busqueda extends JFrame {
 	private DefaultTableModel modeloHuesped;
 	private JLabel labelAtras;
 	private JLabel labelExit;
+
+	private ReservaController reservaController;
+
+	private HuespedController huespedController;
+
 	int xMouse, yMouse;
 
 	/**
@@ -216,7 +214,18 @@ public class Busqueda extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(tbReservas.isShowing()){
+					List<Reserva> reservaciones = reservaController.buscar(Integer.valueOf(txtBuscar.getText()));
+					if(reservaciones.isEmpty()){
+						JOptionPane.showMessageDialog(null, "No existe reservacion con ese numero de reservacion");
+					}
+					else{
+						cargarTabla(modelo, reservaciones);
+					}
+				}
+				else{
 
+				}
 			}
 		});
 		btnbuscar.setLayout(null);
@@ -260,6 +269,16 @@ public class Busqueda extends JFrame {
 		lblEliminar.setBounds(0, 0, 122, 35);
 		btnEliminar.add(lblEliminar);
 		setResizable(false);
+	}
+
+	private void cargarTabla(DefaultTableModel tabla, List<Reserva> listaObjetos){
+		limpiarTabla(tabla);
+		listaObjetos.forEach(reservacion -> tabla.addRow(new Object[] { reservacion.getId(), reservacion.getFecha_entrada(),
+				reservacion.getFecha_salida(), reservacion.getValor(), reservacion.getForma_de_pago()}));
+	}
+
+	private void limpiarTabla(DefaultTableModel tabla){
+		tabla.getDataVector().clear();
 	}
 	
 //Código que permite mover la ventana por la pantalla según la posición de "x" y "y"

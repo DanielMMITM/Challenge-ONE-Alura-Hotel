@@ -3,6 +3,8 @@ package dao;
 import modelo.Reserva;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReservaDAO {
 
@@ -35,6 +37,36 @@ public class ReservaDAO {
                     return true;
                 }
 
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Reserva> buscarReservacion(int numReserva){
+        List<Reserva> resultado = new ArrayList<>();
+
+        try{
+            final PreparedStatement statement = con.prepareStatement("SELECT * FROM reservas where = ?");
+
+            try (statement){
+                statement.setInt(1, numReserva);
+
+                statement.execute();
+
+                ResultSet resultSet = statement.getResultSet();
+
+                while(resultSet.next()){
+                    Reserva fila = new Reserva(
+                            resultSet.getInt("id"),
+                            resultSet.getDate("fecha_entrada"),
+                            resultSet.getDate("fecha_salida"),
+                            resultSet.getInt("valor"),
+                            resultSet.getString("forma_de_pago"));
+                    resultado.add(fila);
+                }
+                return resultado;
             }
         }
         catch (SQLException e){
