@@ -288,7 +288,8 @@ public class Busqueda extends JFrame {
 					limpiarTabla(modelo);
 				}
 				else{
-
+					eliminarHuesped(tbHuespedes);
+					limpiarTabla(modeloHuesped);
 				}
 			}
 		});
@@ -386,6 +387,24 @@ public class Busqueda extends JFrame {
 
 					JOptionPane.showMessageDialog(this, cantidadEliminada + " Reservacion eliminada con éxito!");
 				}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije una reservacion"));
+	}
+
+	private void eliminarHuesped(JTable tabla) {
+		if (tieneFilaElegida(tabla)) {
+			JOptionPane.showMessageDialog(this, "Por favor, elije un huesped");
+			return;
+		}
+		Optional.ofNullable(modeloHuesped.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()))
+				.ifPresentOrElse(fila -> {
+					Integer id = Integer.valueOf(modeloHuesped.getValueAt(tabla.getSelectedRow(), 0).toString());
+					int cantidadEliminada;
+
+					cantidadEliminada = this.huespedController.eliminar(id);
+
+					modeloHuesped.removeRow(tabla.getSelectedRow());
+
+					JOptionPane.showMessageDialog(this, cantidadEliminada + " Huesped eliminado con éxito!");
+				}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un huesped"));
 	}
 
 
