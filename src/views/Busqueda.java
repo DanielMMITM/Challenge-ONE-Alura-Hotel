@@ -285,7 +285,7 @@ public class Busqueda extends JFrame {
 					editarReservacion(tbReservas);
 				}
 				else{
-
+					editarHuesped(tbHuespedes);
 				}
 
 			}
@@ -313,7 +313,7 @@ public class Busqueda extends JFrame {
 	}
 
 	private void editarReservacion(JTable tabla){
-		if(tieneFilaElegida(tbReservas)){
+		if(tieneFilaElegida(tabla)){
 			JOptionPane.showMessageDialog(null,"Por favor, elije un item");
 		}
 		else{
@@ -328,6 +328,30 @@ public class Busqueda extends JFrame {
 						int filasModificadas;
 
 						filasModificadas = this.reservaController.editar(id, fecha_entrada, fecha_salida, valor, forma_de_pago);
+
+						JOptionPane.showMessageDialog(this, String.format("%d item modificado con exito", filasModificadas));
+					}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un item"));
+		}
+	}
+
+	private void editarHuesped(JTable tabla){
+		if(tieneFilaElegida(tabla)){
+			JOptionPane.showMessageDialog(null,"Por favor, elije un item");
+		}
+		else{
+			Optional.ofNullable(modelo.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()))
+					.ifPresentOrElse(fila -> {
+						Integer id = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
+						String nombre = (String) modelo.getValueAt(tabla.getSelectedRow(), 1);
+						String apellido = (String) modelo.getValueAt(tabla.getSelectedRow(), 2);
+						Date fecha_de_nacimiento = (Date) modelo.getValueAt(tabla.getSelectedRow(), 3);
+						String nacionalidad = (String) modelo.getValueAt(tabla.getSelectedRow(), 4);
+						String telefono = (String) modelo.getValueAt(tabla.getSelectedRow(), 5);
+						Integer id_reserva = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 6).toString());
+
+						int filasModificadas;
+
+						filasModificadas = this.huespedController.editar(id, nombre, apellido, fecha_de_nacimiento, nacionalidad, telefono, id_reserva);
 
 						JOptionPane.showMessageDialog(this, String.format("%d item modificado con exito", filasModificadas));
 					}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un item"));

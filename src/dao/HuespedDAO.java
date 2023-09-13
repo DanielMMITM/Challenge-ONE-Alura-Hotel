@@ -77,4 +77,28 @@ public class HuespedDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public int editarHuesped(Integer id, String nombre, String apellido, Date fecha_de_nacimiento, String nacionalidad, String telefono, Integer id_reserva) {
+        try{
+            final PreparedStatement statement = con.prepareStatement("UPDATE huespedes SET nombre = ?" + ", apellido = ?" + ", fecha_de_nacimiento = ?"
+                    + ", nacionalidad = ?, telefono = ?, id_reserva = ? WHERE id = ?");
+
+            try(statement){
+                statement.setString(1, nombre);
+                statement.setString(2, apellido);
+                statement.setDate(3, fecha_de_nacimiento);
+                statement.setString(4, nacionalidad);
+                statement.setInt(5, id_reserva);
+                statement.setInt(6, id);
+                statement.execute();
+
+                int updateCount = statement.getUpdateCount();
+
+                return updateCount;
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 }
