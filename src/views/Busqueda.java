@@ -1,6 +1,7 @@
 package views;
 
 import controller.HuespedController;
+import controller.PersonalController;
 import controller.ReservaController;
 import modelo.Huesped;
 import modelo.Reserva;
@@ -58,6 +59,8 @@ public class Busqueda extends JFrame {
 	 * Create the frame.
 	 */
 	public Busqueda() {
+		this.reservaController = new ReservaController();
+		this.huespedController = new HuespedController();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Busqueda.class.getResource("/imagenes/lupa2.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 571);

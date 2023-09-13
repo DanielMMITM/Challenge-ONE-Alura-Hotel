@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
 import controller.HuespedController;
+import controller.PersonalController;
 import dao.HuespedDAO;
 import modelo.Huesped;
 import modelo.Reserva;
@@ -70,7 +71,8 @@ public class RegistroHuesped extends JFrame {
 	 * Create the frame.
 	 */
 	public RegistroHuesped(Reserva reservacion) {
-		
+		this.huespedController = new HuespedController();
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/lOGO-50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 634);
