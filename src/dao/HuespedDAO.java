@@ -50,7 +50,7 @@ public class HuespedDAO {
         List<Huesped> resultado = new ArrayList<>();
 
         try{
-            final PreparedStatement statement = con.prepareStatement("SELECT * FROM huespedes where = ?");
+            final PreparedStatement statement = con.prepareStatement("SELECT * FROM huespedes where apellido = ?");
 
             try (statement){
                 statement.setString(1, apellido);

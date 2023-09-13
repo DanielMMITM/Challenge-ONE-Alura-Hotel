@@ -48,7 +48,7 @@ public class ReservaDAO {
         List<Reserva> resultado = new ArrayList<>();
 
         try{
-            final PreparedStatement statement = con.prepareStatement("SELECT * FROM reservas where = ?");
+            final PreparedStatement statement = con.prepareStatement("SELECT * FROM reservas where id = ?");
 
             try (statement){
                 statement.setInt(1, numReserva);
