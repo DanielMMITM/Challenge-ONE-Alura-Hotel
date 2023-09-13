@@ -11,6 +11,9 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+import controller.ReservaController;
+import modelo.Reserva;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -23,6 +26,7 @@ import java.awt.Toolkit;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Date;
 import javax.swing.JSeparator;
@@ -41,6 +45,8 @@ public class ReservasView extends JFrame {
 	int xMouse, yMouse;
 	private JLabel labelExit;
 	private JLabel labelAtras;
+
+	private ReservaController reservaController;
 
 	private Integer valor, totalDias;
 
@@ -350,7 +356,9 @@ public class ReservasView extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {
-					RegistroHuesped registro = new RegistroHuesped();
+					Reserva reservacion = new Reserva(txtFechaEntrada.getDate(), txtFechaSalida.getDate(), Integer.valueOf(txtValor.getText()), txtFormaPago.getSelectedItem().toString());
+					int numReserva = reservaController.reservar(reservacion);
+					RegistroHuesped registro = new RegistroHuesped(numReserva);
 					registro.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");

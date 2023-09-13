@@ -1,14 +1,14 @@
 package modelo;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Reserva {
     private Integer id;
 
-    private LocalDateTime fecha_entrada;
+    private Date fecha_entrada;
 
-    private LocalDateTime fecha_salida;
+    private Date fecha_salida;
 
     private Integer valor;
 
@@ -18,7 +18,7 @@ public class Reserva {
 
     }
 
-    public Reserva(LocalDateTime fecha_entrada, LocalDateTime fecha_salida, Integer valor, String forma_de_pago) {
+    public Reserva(Date fecha_entrada, Date fecha_salida, Integer valor, String forma_de_pago) {
         this.fecha_entrada = fecha_entrada;
         this.fecha_salida = fecha_salida;
         this.valor = valor;
@@ -33,19 +33,19 @@ public class Reserva {
         this.id = id;
     }
 
-    public LocalDateTime getFecha_entrada() {
+    public Date getFecha_entrada() {
         return fecha_entrada;
     }
 
-    public void setFecha_entrada(LocalDateTime fecha_entrada) {
+    public void setFecha_entrada(Date fecha_entrada) {
         this.fecha_entrada = fecha_entrada;
     }
 
-    public LocalDateTime getFecha_salida() {
+    public Date getFecha_salida() {
         return fecha_salida;
     }
 
-    public void setFecha_salida(LocalDateTime fecha_salida) {
+    public void setFecha_salida(Date fecha_salida) {
         this.fecha_salida = fecha_salida;
     }
 
