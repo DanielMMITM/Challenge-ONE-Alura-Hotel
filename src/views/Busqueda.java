@@ -2,6 +2,7 @@ package views;
 
 import controller.HuespedController;
 import controller.ReservaController;
+import modelo.Huesped;
 import modelo.Reserva;
 
 import java.awt.EventQueue;
@@ -224,7 +225,13 @@ public class Busqueda extends JFrame {
 					}
 				}
 				else{
-
+					List<Huesped> huespedes = huespedController.buscar(txtBuscar.getText());
+					if(huespedes.isEmpty()){
+						JOptionPane.showMessageDialog(null, "No existe ningun huesped con ese apellido");
+					}
+					else{
+						cargarTablaH(modeloHuesped, huespedes);
+					}
 				}
 			}
 		});
@@ -275,6 +282,12 @@ public class Busqueda extends JFrame {
 		limpiarTabla(tabla);
 		listaObjetos.forEach(reservacion -> tabla.addRow(new Object[] { reservacion.getId(), reservacion.getFecha_entrada(),
 				reservacion.getFecha_salida(), reservacion.getValor(), reservacion.getForma_de_pago()}));
+	}
+
+	private void cargarTablaH(DefaultTableModel tabla, List<Huesped> listaObjetos){
+		limpiarTabla(tabla);
+		listaObjetos.forEach(huesped -> tabla.addRow(new Object[] { huesped.getId(), huesped.getNombre(), huesped.getApellido(),
+				huesped.getFecha_de_nacimiento(), huesped.getNacionalidad(), huesped.getTelefono(), huesped.getId_reserva()}));
 	}
 
 	private void limpiarTabla(DefaultTableModel tabla){

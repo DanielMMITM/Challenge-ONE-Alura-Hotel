@@ -3,6 +3,8 @@ package dao;
 import modelo.Huesped;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HuespedDAO {
 
@@ -38,6 +40,38 @@ public class HuespedDAO {
                 }
             }
 
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Huesped> buscarHuesped(String apellido){
+        List<Huesped> resultado = new ArrayList<>();
+
+        try{
+            final PreparedStatement statement = con.prepareStatement("SELECT * FROM huespedes where = ?");
+
+            try (statement){
+                statement.setString(1, apellido);
+
+                statement.execute();
+
+                ResultSet resultSet = statement.getResultSet();
+
+                while(resultSet.next()){
+                    Huesped fila = new Huesped(
+                            resultSet.getInt("id"),
+                            resultSet.getString("nombre"),
+                            resultSet.getString("apellido"),
+                            resultSet.getDate("fecha_de_nacimiento"),
+                            resultSet.getString("nacionalidad"),
+                            resultSet.getString("telefono"),
+                            resultSet.getInt("id_reserva"));
+                    resultado.add(fila);
+                }
+                return resultado;
+            }
         }
         catch (SQLException e){
             throw new RuntimeException(e);

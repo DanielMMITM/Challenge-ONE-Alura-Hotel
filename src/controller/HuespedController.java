@@ -4,6 +4,8 @@ import dao.HuespedDAO;
 import factory.ConnectionFactory;
 import modelo.Huesped;
 
+import java.util.List;
+
 public class HuespedController {
     private HuespedDAO huespedDAO;
 
@@ -13,6 +15,10 @@ public class HuespedController {
 
     public boolean guardar(Huesped persona){
         return huespedDAO.guardarHuesped(persona);
+    }
+
+    public List<Huesped> buscar(String apellido){
+        return huespedDAO.buscarHuesped(apellido);
     }
 
 
