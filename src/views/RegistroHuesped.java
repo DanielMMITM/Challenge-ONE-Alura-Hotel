@@ -10,6 +10,7 @@ import com.toedter.calendar.JDateChooser;
 import controller.HuespedController;
 import dao.HuespedDAO;
 import modelo.Huesped;
+import modelo.Reserva;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -68,7 +69,7 @@ public class RegistroHuesped extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroHuesped(int numReserva) {
+	public RegistroHuesped(Reserva reservacion) {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/lOGO-50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -221,6 +222,7 @@ public class RegistroHuesped extends JFrame {
 		txtNreserva.setBackground(Color.WHITE);
 		txtNreserva.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		contentPane.add(txtNreserva);
+		txtNreserva.setText(reservacion.getId().toString());
 		
 		JSeparator separator_1_2 = new JSeparator();
 		separator_1_2.setBounds(560, 170, 289, 2);
@@ -263,10 +265,14 @@ public class RegistroHuesped extends JFrame {
 		btnguardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Huesped persona = new Huesped(txtNombre.getText(), txtApellido.getText(), txtFechaN.getDate(),
+				java.sql.Date fechaN = new java.sql.Date(txtFechaN.getDate().getTime());
+				Huesped persona = new Huesped(txtNombre.getText(), txtApellido.getText(), fechaN,
 						txtNacionalidad.getSelectedItem().toString(), txtTelefono.getText(), Integer.valueOf(txtNreserva.getText()));
 				if(huespedController.guardar(persona)){
 					JOptionPane.showMessageDialog(null, "Se registro con exito el huesped");
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Ocurrio un problema con e registro del huesped");
 				}
 
 			}
