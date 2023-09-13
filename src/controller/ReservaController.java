@@ -11,7 +11,7 @@ public class ReservaController {
         this.reservaDAO = reservaDAO = new ReservaDAO(new ConnectionFactory().recuperaConexion());
     }
 
-    public int reservar(Reserva reservacion){
+    public boolean reservar(Reserva reservacion){
         return reservaDAO.reservar(reservacion);
     }
 }

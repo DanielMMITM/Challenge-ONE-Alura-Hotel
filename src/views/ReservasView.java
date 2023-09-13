@@ -356,11 +356,12 @@ public class ReservasView extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (ReservasView.txtFechaEntrada.getDate() != null && ReservasView.txtFechaSalida.getDate() != null) {
-					Reserva reservacion = new Reserva(txtFechaEntrada.getDate(), txtFechaSalida.getDate(), Integer.valueOf(txtValor.getText()), txtFormaPago.getSelectedItem().toString());
-					int numReserva = reservaController.reservar(reservacion);
-					if (numReserva > 0){
+					java.sql.Date fechaEnt = new java.sql.Date(txtFechaEntrada.getDate().getTime());
+					java.sql.Date fechaSal = new java.sql.Date(txtFechaSalida.getDate().getTime());
+					Reserva reservacion = new Reserva(fechaEnt, fechaSal, Integer.valueOf(txtValor.getText()), txtFormaPago.getSelectedItem().toString());
+					if (reservaController.reservar(reservacion)){
 						JOptionPane.showMessageDialog(null, "Se registro con exito la reserva");
-						RegistroHuesped registro = new RegistroHuesped(numReserva);
+						RegistroHuesped registro = new RegistroHuesped(reservacion);
 						registro.setVisible(true);
 					}
 					else{

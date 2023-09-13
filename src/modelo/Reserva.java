@@ -1,7 +1,6 @@
 package modelo;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
 
 public class Reserva {
     private Integer id;
