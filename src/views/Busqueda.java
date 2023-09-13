@@ -277,7 +277,19 @@ public class Busqueda extends JFrame {
 				else{
 					editarHuesped(tbHuespedes);
 				}
+			}
+		});
 
+		btnEliminar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (tbReservas.isShowing()){
+					eliminarReservacion(tbReservas);
+					limpiarTabla(modelo);
+				}
+				else{
+
+				}
 			}
 		});
 	}
@@ -314,7 +326,7 @@ public class Busqueda extends JFrame {
 
 	private void editarReservacion(JTable tabla){
 		if(tieneFilaElegida(tabla)){
-			JOptionPane.showMessageDialog(null,"Por favor, elije un item");
+			JOptionPane.showMessageDialog(null,"Por favor, elije una reservacion");
 		}
 		else{
 			Optional.ofNullable(modelo.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()))
@@ -329,14 +341,14 @@ public class Busqueda extends JFrame {
 
 						filasModificadas = this.reservaController.editar(id, fecha_entrada, fecha_salida, valor, forma_de_pago);
 
-						JOptionPane.showMessageDialog(this, String.format("%d item modificado con exito", filasModificadas));
-					}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un item"));
+						JOptionPane.showMessageDialog(this, String.format("%d Reservacion modificada con exito", filasModificadas));
+					}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije una reservacion"));
 		}
 	}
 
 	private void editarHuesped(JTable tabla){
 		if(tieneFilaElegida(tabla)){
-			JOptionPane.showMessageDialog(null,"Por favor, elije un item");
+			JOptionPane.showMessageDialog(null,"Por favor, elije un huesped");
 		}
 		else{
 			Optional.ofNullable(modeloHuesped.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()))
@@ -353,10 +365,30 @@ public class Busqueda extends JFrame {
 
 						filasModificadas = this.huespedController.editar(id, nombre, apellido, fecha_de_nacimiento, nacionalidad, telefono, id_reserva);
 
-						JOptionPane.showMessageDialog(this, String.format("%d item modificado con exito", filasModificadas));
-					}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un item"));
+						JOptionPane.showMessageDialog(this, String.format("%d Huesped modificado con exito", filasModificadas));
+					}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un huesped"));
 		}
 	}
+
+	private void eliminarReservacion(JTable tabla) {
+		if (tieneFilaElegida(tabla)) {
+			JOptionPane.showMessageDialog(this, "Por favor, elije una reservacion");
+			return;
+		}
+		Optional.ofNullable(modelo.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()))
+				.ifPresentOrElse(fila -> {
+					Integer id = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
+					int cantidadEliminada;
+
+					cantidadEliminada = this.reservaController.eliminar(id);
+
+					modelo.removeRow(tabla.getSelectedRow());
+
+					JOptionPane.showMessageDialog(this, cantidadEliminada + " Reservacion eliminada con éxito!");
+				}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije una reservacion"));
+	}
+
+
 	
 //Código que permite mover la ventana por la pantalla según la posición de "x" y "y"
 	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
