@@ -272,10 +272,15 @@ public class Busqueda extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (tbReservas.isShowing()){
+					List<Reserva> reservaciones = reservaController.buscar(Integer.valueOf(txtBuscar.getText()));
 					editarReservacion(tbReservas);
+					cargarTabla(modelo, reservaciones);
 				}
 				else{
+					List<Huesped> huespedes = huespedController.buscar(txtBuscar.getText());
 					editarHuesped(tbHuespedes);
+					cargarTablaH(modeloHuesped, huespedes);
+
 				}
 			}
 		});
