@@ -1,6 +1,6 @@
 package modelo;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Huesped {
     private Integer id;
@@ -9,7 +9,7 @@ public class Huesped {
 
     private String apellido;
 
-    private LocalDate fecha_de_nacimiento;
+    private Date fecha_de_nacimiento;
 
     private String nacionalidad;
 
@@ -21,9 +21,13 @@ public class Huesped {
 
     }
 
-    public Huesped(String nombre, String apellido) {
+    public Huesped(String nombre, String apellido, Date fecha_de_nacimiento, String nacionalidad, String telefono, Integer id_reserva) {
         this.nombre = nombre;
         this.apellido = apellido;
+        this.fecha_de_nacimiento = fecha_de_nacimiento;
+        this.nacionalidad = nacionalidad;
+        this.telefono = telefono;
+        this.id_reserva = id_reserva;
     }
 
     public Integer getId() {
@@ -50,11 +54,11 @@ public class Huesped {
         this.apellido = apellido;
     }
 
-    public LocalDate getFecha_de_nacimiento() {
+    public Date getFecha_de_nacimiento() {
         return fecha_de_nacimiento;
     }
 
-    public void setFecha_de_nacimiento(LocalDate fecha_de_nacimiento) {
+    public void setFecha_de_nacimiento(Date fecha_de_nacimiento) {
         this.fecha_de_nacimiento = fecha_de_nacimiento;
     }
 
