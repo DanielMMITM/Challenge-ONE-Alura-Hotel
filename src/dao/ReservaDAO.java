@@ -23,22 +23,14 @@ public class ReservaDAO {
                 statement.setInt(3, reservacion.getValor());
                 statement.setString(4, reservacion.getForma_de_pago());
 
-                System.out.println(reservacion.getFecha_entrada());
-                System.out.println(reservacion.getFecha_salida());
-                System.out.println(reservacion.getValor());
-                System.out.println(reservacion.getForma_de_pago());
-
                 statement.execute();
 
                 final ResultSet resultSet = statement.getGeneratedKeys();
 
-                System.out.println("results: " + resultSet);
                 try(resultSet){
-                    System.out.println("resultset IN");
                     while(resultSet.next()){
-                        System.out.println("resultset IN while");
                         reservacion.setId(resultSet.getInt(1));
-                        System.out.println(String.format("Fue insertado el producto %s", reservacion.getId()));
+                        System.out.println(String.format("Fue insertada la reservación %s", reservacion.getId()));
                     }
                     return true;
                 }
