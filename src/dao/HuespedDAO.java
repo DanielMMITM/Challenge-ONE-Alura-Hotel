@@ -1,9 +1,7 @@
 package dao;
 
-import factory.ConnectionFactory;
 import modelo.Huesped;
 
-import javax.swing.*;
 import java.sql.*;
 
 public class HuespedDAO {
