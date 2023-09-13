@@ -218,21 +218,11 @@ public class Busqueda extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if(tbReservas.isShowing()){
 					List<Reserva> reservaciones = reservaController.buscar(Integer.valueOf(txtBuscar.getText()));
-					if(reservaciones.isEmpty()){
-						JOptionPane.showMessageDialog(null, "No existe reservacion con ese numero de reservacion");
-					}
-					else{
-						cargarTabla(modelo, reservaciones);
-					}
+					cargarTabla(modelo, reservaciones);
 				}
 				else{
 					List<Huesped> huespedes = huespedController.buscar(txtBuscar.getText());
-					if(huespedes.isEmpty()){
-						JOptionPane.showMessageDialog(null, "No existe ningun huesped con ese apellido");
-					}
-					else{
-						cargarTablaH(modeloHuesped, huespedes);
-					}
+					cargarTablaH(modeloHuesped, huespedes);
 				}
 			}
 		});
@@ -298,14 +288,24 @@ public class Busqueda extends JFrame {
 
 	private void cargarTabla(DefaultTableModel tabla, List<Reserva> listaObjetos){
 		limpiarTabla(tabla);
-		listaObjetos.forEach(reservacion -> tabla.addRow(new Object[] { reservacion.getId(), reservacion.getFecha_entrada(),
-				reservacion.getFecha_salida(), reservacion.getValor(), reservacion.getForma_de_pago()}));
+		if(listaObjetos.isEmpty()){
+			JOptionPane.showMessageDialog(null, "No existe reservacion con ese numero de reservacion");
+		}
+		else {
+			listaObjetos.forEach(reservacion -> tabla.addRow(new Object[]{reservacion.getId(), reservacion.getFecha_entrada(),
+					reservacion.getFecha_salida(), reservacion.getValor(), reservacion.getForma_de_pago()}));
+		}
 	}
 
 	private void cargarTablaH(DefaultTableModel tabla, List<Huesped> listaObjetos){
 		limpiarTabla(tabla);
-		listaObjetos.forEach(huesped -> tabla.addRow(new Object[] { huesped.getId(), huesped.getNombre(), huesped.getApellido(),
-				huesped.getFecha_de_nacimiento(), huesped.getNacionalidad(), huesped.getTelefono(), huesped.getId_reserva()}));
+		if(listaObjetos.isEmpty()){
+			JOptionPane.showMessageDialog(null, "No existe ningun huesped con ese apellido");
+		}
+		else {
+			listaObjetos.forEach(huesped -> tabla.addRow(new Object[]{huesped.getId(), huesped.getNombre(), huesped.getApellido(),
+					huesped.getFecha_de_nacimiento(), huesped.getNacionalidad(), huesped.getTelefono(), huesped.getId_reserva()}));
+		}
 	}
 
 	private void limpiarTabla(DefaultTableModel tabla){
