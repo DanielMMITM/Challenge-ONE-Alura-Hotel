@@ -4,6 +4,7 @@ import dao.ReservaDAO;
 import factory.ConnectionFactory;
 import modelo.Reserva;
 
+import java.sql.Date;
 import java.util.List;
 
 public class ReservaController {
@@ -19,5 +20,9 @@ public class ReservaController {
 
     public List<Reserva> buscar(int numReserva){
         return reservaDAO.buscarReservacion(numReserva);
+    }
+
+    public int editar(Integer id, Date fecha_entrada, Date fecha_salida, Integer valor, String forma_de_pago) {
+        return reservaDAO.editarReservacion(id, fecha_entrada, fecha_salida, valor, forma_de_pago);
     }
 }

@@ -73,4 +73,27 @@ public class ReservaDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public int editarReservacion(Integer id, Date fecha_entrada, Date fecha_salida, Integer valor, String forma_de_pago) {
+        try{
+            final PreparedStatement statement = con.prepareStatement("UPDATE reservas SET fecha_entrada = ?" + ", fecha_salida = ?" + ", valor = ?"
+                    + ", forma_de_pago = ? WHERE id = ?");
+
+            try(statement){
+                statement.setDate(1, fecha_entrada);
+                statement.setDate(2, fecha_salida);
+                statement.setInt(3, valor);
+                statement.setString(4, forma_de_pago);
+                statement.setInt(5, id);
+                statement.execute();
+
+                int updateCount = statement.getUpdateCount();
+
+                return updateCount;
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 }

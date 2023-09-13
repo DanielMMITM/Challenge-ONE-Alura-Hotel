@@ -13,13 +13,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.Font;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.sql.Date;
 import java.util.List;
-import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.util.Optional;
 
 @SuppressWarnings("serial")
 public class Busqueda extends JFrame {
@@ -279,6 +277,23 @@ public class Busqueda extends JFrame {
 		lblEliminar.setBounds(0, 0, 122, 35);
 		btnEliminar.add(lblEliminar);
 		setResizable(false);
+
+		btnEditar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (tbReservas.isShowing()){
+					editarReservacion(tbReservas);
+				}
+				else{
+
+				}
+
+			}
+		});
+	}
+
+	private boolean tieneFilaElegida(JTable tabla) {
+		return tabla.getSelectedRowCount() == 0 || tabla.getSelectedColumnCount() == 0;
 	}
 
 	private void cargarTabla(DefaultTableModel tabla, List<Reserva> listaObjetos){
@@ -295,6 +310,28 @@ public class Busqueda extends JFrame {
 
 	private void limpiarTabla(DefaultTableModel tabla){
 		tabla.getDataVector().clear();
+	}
+
+	private void editarReservacion(JTable tabla){
+		if(tieneFilaElegida(tbReservas)){
+			JOptionPane.showMessageDialog(null,"Por favor, elije un item");
+		}
+		else{
+			Optional.ofNullable(modelo.getValueAt(tabla.getSelectedRow(), tabla.getSelectedColumn()))
+					.ifPresentOrElse(fila -> {
+						Integer id = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
+						Date fecha_entrada = (Date) modelo.getValueAt(tabla.getSelectedRow(), 1);
+						Date fecha_salida = (Date) modelo.getValueAt(tabla.getSelectedRow(), 2);
+						Integer valor = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 3).toString());
+						String forma_de_pago = (String) modelo.getValueAt(tabla.getSelectedRow(), 4);
+
+						int filasModificadas;
+
+						filasModificadas = this.reservaController.editar(id, fecha_entrada, fecha_salida, valor, forma_de_pago);
+
+						JOptionPane.showMessageDialog(this, String.format("%d item modificado con exito", filasModificadas));
+					}, () -> JOptionPane.showMessageDialog(this, "Por favor, elije un item"));
+		}
 	}
 	
 //Código que permite mover la ventana por la pantalla según la posición de "x" y "y"
