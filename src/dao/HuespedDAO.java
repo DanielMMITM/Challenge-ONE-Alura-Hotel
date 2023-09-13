@@ -88,8 +88,9 @@ public class HuespedDAO {
                 statement.setString(2, apellido);
                 statement.setDate(3, fecha_de_nacimiento);
                 statement.setString(4, nacionalidad);
-                statement.setInt(5, id_reserva);
-                statement.setInt(6, id);
+                statement.setString(5, telefono);
+                statement.setInt(6, id_reserva);
+                statement.setInt(7, id);
                 statement.execute();
 
                 int updateCount = statement.getUpdateCount();
