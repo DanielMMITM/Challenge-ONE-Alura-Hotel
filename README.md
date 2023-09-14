@@ -16,7 +16,7 @@
 ## 🖥️ Tecnologías Utilizadas:
 
 - Java
-- Eclipse
+- Eclipse (En mi caso utilicé IntelliJ IDEA)
 - Biblioteca JCalendar
 - MySql
 - Plugin WindowBuilder </br>
